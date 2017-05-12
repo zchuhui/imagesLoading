@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>RunJS</title>
+		<style type="text/css">
+			.imgbox{
+				width:1000px;
+				height:800px;
+				overflow:hidden;
+				margin:10px auto;
+			}
+			.btn-wrap{
+				width:150px;
+				margin:10px auto;
+			}
+			.loading{
+			  position:fixed;
+				left:0;
+				top:0;
+				height:100%;
+				width:100%;
+				background:#000;
+				text-align:center;
+				color:#fff;
+				padding-top: 30%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="imgbox">
+			<img id="imageBox"  src="http://p1.so.qhimgs1.com/t01b2c49920396f8891.jpg" alt="图片">
+		</div>  
+		<div class="btn-wrap">
+			<a href="javascript:;" data-control="prev" class="btn">上一张</a>
+			<a href="javascript:;" data-control="next"  class="btn">下一张</a>
+		</div>		
+
+		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				
+				var images = [
+					"http://p1.so.qhimgs1.com/t01b2c49920396f8891.jpg",
+					"http://p4.so.qhimgs1.com/t01545ebca52b2a709a.jpg",
+					"http://p1.so.qhimgs1.com/t019e3679b104592ead.jpg",
+					"http://p2.so.qhimgs1.com/t013638d14bae378f42.jpg",
+					"http://p2.so.qhmsg.com/t01a39e7cede5efe927.jpg",
+					"http://p4.so.qhimgs1.com/t01809a0419afdffa4a.jpg",
+					"http://p0.so.qhmsg.com/t01d766928a93ff616f.jpg",
+					"http://p0.so.qhimgs1.com/t014feec890f6714540.jpg"
+				]; 
+				
+				var $imgbox = $("#imageBox"),
+						  count = 0,
+			        	  index = 0,
+						  len = images.length; 
+				
+			  	//$imgbox.attr("src",images[index]);		
+
+			  	loadImage();
+
+				function loadImage(){
+
+					var image = new Image();
+
+					$(image).on("load",function(){
+						console.log("load"); 
+						if (count >= len) {
+							console.log("全部加载完成！");
+						}else{
+							console.log(count);
+							loadImage();
+						}
+
+						count ++;
+					});
+				}
+				
+				$("body").on("click","a.btn",function(){
+					// 上一页
+					if($(this).attr("data-control") === "prev"){
+						 Math.max(0, --index);
+					}else{
+						 // 下一页
+						 Math.min(len,++index);
+					}
+					
+					$imgbox.attr("src",images[index]);			
+				});
+
+
+
+			});
+		</script>
+	</body>
+</html>
